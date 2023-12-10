@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { BiUserCircle } from "react-icons/bi";
 import { TfiWrite } from "react-icons/tfi";
-
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { user } = useContext(UserContext);
   const [logout, setLonging] = useState(false);
-  console.log("navbar", user);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     setLonging(true);
     window.location.reload();
+    navigate('/')
   };
 
   return (
