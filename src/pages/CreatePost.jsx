@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState ,useEffect} from "react";
 import Navbar from "../components/Navbar";
 import { ImCross } from "react-icons/im";
 import { UserContext } from "../context/UserContext";
@@ -15,12 +15,17 @@ const CreatePost = () => {
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState("");
   const [cats, setCats] = useState([]);
+  const [previewImageUrl, setPreviewImageUrl] = useState(null); // State for image preview
+
+
+ 
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
 
-    if (!title || !desc || !file || !cat || !cats) {
-      toast.error("Fill the required Filed", {
+    if (!title || !desc || !file || !cats.length) {
+      toast.error("Fill in the required fields", {
+        // Toast notification for empty fields
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 5000,
         hideProgressBar: false,
@@ -41,13 +46,14 @@ const CreatePost = () => {
       categories: cats,
     };
 
+    // Handling image upload
     if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;
       data.append("name", filename);
       data.append("file", file);
       newPost.photo = filename;
-      // console.log(newPost)
+
       try {
         const uploadImg = await axios.post(
           `${import.meta.env.VITE_URL}/api/upload`,
@@ -58,6 +64,7 @@ const CreatePost = () => {
         console.log(err);
       }
     }
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_URL}/api/posts/create`,
@@ -65,8 +72,6 @@ const CreatePost = () => {
         { withCredentials: true }
       );
 
-      console.log(res.data);
-      //  setUpdated(true)
       navigate("/posts/post/" + res.data._id);
     } catch (err) {
       console.log(err);
@@ -86,6 +91,15 @@ const CreatePost = () => {
     setCats(newCats);
   };
 
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+
+    // Create an object URL for the selected file
+    const imageUrl = URL.createObjectURL(selectedFile);
+    setPreviewImageUrl(imageUrl); // Set state to hold the image URL
+  };
+
   return (
     <div>
       <Navbar />
@@ -100,11 +114,20 @@ const CreatePost = () => {
             className="px-4 py-2 outline-none"
           />
           <input
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={handleImageChange}
             placeholder="Enter image"
             type="file"
             className="px-4"
           />
+          {previewImageUrl && (
+            <img
+              src={`http://localhost:5173/images/${previewImageUrl}`}
+              alt="Preview"
+              className="mt-2 w-64 h-auto"
+              style={{background: "black"}}
+            />
+          )}
+          {/* Rest of the form remains the same */}
           <div className="flex flex-col">
             <div className="flex items-center space-x-4 md:space-x-8">
               <input
@@ -126,7 +149,7 @@ const CreatePost = () => {
                 <div key={i} className="flex ">
                   <div className="flex justify-center items-center space-x-2 mr-4 bg-gray-200 px-2 py-1 rounded-md">
                     <p>{c}</p>
-                    <p className="text-white bg-black rounded-full cursor-pointer p-1 text-sm">
+                    <p className="text-white  rounded-full cursor-pointer p-1 text-sm">
                       <ImCross onClick={() => removeCat(i)} />
                     </p>
                   </div>

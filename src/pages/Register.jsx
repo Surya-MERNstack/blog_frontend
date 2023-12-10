@@ -108,7 +108,6 @@ const Register = () => {
             className="w-full px-4 py-2 border-2 border-black outline-0"
           />
           <button
-            // className="w-full px-4 py-4 text-lg font-bold text-white hover:bg-white hover:border-4  hover:border-solid  hover:text-black bg-black rounded-lg "
             className="w-full px-3 py-3 text-lg font-bold text-white bg-black rounded-lg hover:bg-white hover:text-black hover:border-2 hover:border-black"
             onClick={handleRegister}
           >

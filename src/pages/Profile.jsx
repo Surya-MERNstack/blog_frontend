@@ -36,7 +36,7 @@ const Profile = () => {
   const doDelete = async () => {
     try {
       await axios
-        .delete(`https://blogserver-bskv.onrender.com/api/users/user/` + userId.id)
+        .delete(`${import.meta.env.VITE_URL}/api/users/user/` + userId.id)
         .then((res) => {
           // console.log('user deleted!')
           toast.success("user deleted", {
@@ -50,7 +50,7 @@ const Profile = () => {
             theme: "dark",
         })
           axios
-            .get(`https://blogserver-bskv.onrender.com/api/auth/logout`)
+            .get(`${import.meta.env.VITE_URL}/api/auth/logout`)
             .then((response) => {
               navigate("/login");
             })
@@ -75,7 +75,7 @@ const Profile = () => {
 
   const fetchUserData = async () => {
     axios
-      .get(`https://blogserver-bskv.onrender.com/users/user/` + userId.id)
+      .get(`${import.meta.env.VITE_URL}/users/user/` + userId.id)
       .then((res) => {
         setUserIdx(res.data._id);
         setUsername(res.data.username);
@@ -108,14 +108,14 @@ const Profile = () => {
       newUser.profilePic = filename;
       // console.log(newUser);
       try {
-        await axios.post(`https://blogserver-bskv.onrender.com/api/upload`, data);
+        await axios.post(`${import.meta.env.VITE_URL}/api/upload`, data);
       } catch (err) {
         // console.log(err);
       }
     }
     try {
       const res = await axios.put(
-        `https://blogserver-bskv.onrender.com/api/users/user/` + userId.id,
+        `${import.meta.env.VITE_URL}/api/users/user/` + userId.id,
         newUser
       );
       fetchUserData();
@@ -133,7 +133,7 @@ const Profile = () => {
   const fetchPosts = () => {
     setLoader(true);
     axios
-      .get(`https://blogserver-bskv.onrender.com/api/posts/all/` + userId.id)
+      .get(`${import.meta.env.VITE_URL}/api/posts/all/` + userId.id)
       .then((res) => {
         // console.log(res.data)
         setMyPosts(res.data);
@@ -153,18 +153,18 @@ const Profile = () => {
       <Navbar />
       {confirmDelete ? (
         <div className="h-screen flex justify-center items-center ">
-          <div className="flex flex-col px-20 py-10 md:px-40 md:py-20 border-2 border-solid border-gray-500">
+          <div className="flex flex-col px-20 py-10 md:px-40 md:py-20 border-2 border-solid shadow-md rounded-xl ">
             <h3 className="text-lg font-bold">Are you sure?</h3>
-            <div className="flex justify-center items-center space-x-4">
+            <div className="flex justify-center items-center  space-x-4 mt-4">
               <button
                 onClick={doDelete}
-                className="bg-black px-4 py-2 text-white"
+                className="bg-red-500 px-4 py-2 text-white hover:bg-white hover:text-black hover:delay-75 hover:duration-75 ease-linear hover:border-2 hover:rounded-xl delay-75 duration-75 hover:border-solid font-semibold hover:border-red-700 rounded-md"
               >
                 Yes
               </button>
               <button
                 onClick={cancelDelete}
-                className="bg-white px-4 py-2 text-black border-2 border-solid border-gray-500"
+                className="bg-green-500 px-4 py-2 text-white hover:bg-white hover:text-black hover:delay-75 hover:duration-75 ease-linear hover:border-2 hover:rounded-xl delay-75 duration-75 hover:border-solid font-semibold hover:border-green-700 rounded-md"
               >
                 No
               </button>

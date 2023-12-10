@@ -6,14 +6,13 @@ import { TfiWrite } from "react-icons/tfi";
 
 const Navbar = () => {
   const { user } = useContext(UserContext);
-  const [logout,setLonging] = useState(false)
+  const [logout, setLonging] = useState(false);
   console.log("navbar", user);
 
-
   const handleLogout = () => {
-     setLonging(true)
-     window.location.reload();
-  }
+    setLonging(true);
+    window.location.reload();
+  };
 
   return (
     <div className="flex items-center justify-between px-6 md:px-[200px] py-4">
@@ -24,13 +23,19 @@ const Navbar = () => {
         {user ? (
           <>
             <h3 className="text-lg">
-              <Link to="/write">
-                <TfiWrite title="write" className="font-bold text-blue-500" />
-              </Link>
+              <div className="  cursor-pointer">
+                <Link to="/write" className="flex gap-2  bg-blue-500 px-2 py-1 text-white rounded-md hover:border-blue-500 hover:border-2 hover:bg-white hover:text-blue-600 hover:delay-75 hover:ease-in-out hover:duration-100">
+                <span className="text-md">Write</span>
+                  <TfiWrite
+                    title="write"
+                    className="font-bold    mt-1"
+                  />
+                </Link>
+              </div>
             </h3>
             <Link to={"/profile/" + user._id}>
-              <div className="flex items-center justify-center space-x-2 cursor-pointer md:space-x-3">
-                <div className="flex items-center justify-center bg-black rounded-full">
+              <div className="flex items-center justify-center space-x-2 cursor-pointer md:space-x-3 bg-slate-400 px-2 py-1  rounded-lg hover:border-slate-500 hover:border-2 hover:bg-white hover:text-slate-600 hover:delay-75 hover:ease-in-out hover:duration-100">
+                <div className="flex items-center justify-center  rounded-full">
                   {/* Check if user.photo exists and is a valid URL */}
                   {user.photo ? (
                     <img
@@ -40,16 +45,18 @@ const Navbar = () => {
                     />
                   ) : (
                     <BiUserCircle
-                      className="text-lg md:text-xl bg-white"
+                      className=" md:text-xl bg-transparent "
                       title={user.username}
                     />
                   )}
                 </div>
-                <h3 className="text-lg">{user.username}</h3>
+                <h3 className="text-lg font-semibold -mt-1">{user.username}</h3>
               </div>
             </Link>
-            <h3 className="font-bold bg-red-600 text-white p-1 rounded-lg">
-              <Link to="/logout" onClick={handleLogout}>Logout</Link>
+            <h3 className="font-semibold bg-red-600 text-white px-2 py-1 rounded-lg hover:border-red-500 hover:border-2 hover:bg-white hover:text-red-600 hover:delay-75 hover:ease-in-out hover:duration-100">
+              <Link to="/logout" onClick={handleLogout}>
+                Logout
+              </Link>
             </h3>
           </>
         ) : (
