@@ -47,16 +47,9 @@ const PostDetails = () => {
   };
 
   const deleteComment = async (id) => {
-
-    
-
-   
-
     try {
       await axios
-        .delete(
-          `${import.meta.env.VITE_URL}/api/comments/comment/` + id
-        )
+        .delete(`${import.meta.env.VITE_URL}/api/comments/comment/` + id)
         .then((res) => {
           // console.log('comment deleted')
           fetchComments();
@@ -86,8 +79,6 @@ const PostDetails = () => {
   };
 
   const fetchComments = async () => {
-
-    
     setLoader(true);
     try {
       const res = await axios.get(
@@ -131,17 +122,17 @@ const PostDetails = () => {
   }, [id]);
 
   const handleComment = () => {
-
-    if(!comment) return toast.error("Fill the required Fields", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    })
+    if (!comment)
+      return toast.error("Fill the required Fields", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     axios
       .post(`${import.meta.env.VITE_URL}/api/comments/create`, {
         comment: comment,
@@ -191,13 +182,13 @@ const PostDetails = () => {
             <div className="flex items-center justify-center space-x-4 mt-3">
               <button
                 onClick={postDelete}
-                className="bg-red-500 px-4 py-2 text-white hover:bg-white hover:text-black hover:delay-75 hover:duration-75 ease-linear hover:border-2 hover:rounded-xl delay-75 duration-75 hover:border-solid font-semibold hover:border-red-700 rounded-md"
+                className="bg-green-500 px-4 py-2 text-white hover:bg-white hover:text-black hover:delay-75 hover:duration-75 ease-linear hover:border-2 hover:rounded-xl delay-75 duration-75 hover:border-solid font-semibold hover:border-green-700 rounded-md"
               >
                 Yes
               </button>
               <button
                 onClick={cancelDelete}
-                className="bg-green-500 px-4 py-2 text-white hover:bg-white hover:text-black hover:delay-75 hover:duration-75 ease-linear hover:border-2 hover:rounded-xl delay-75 duration-75 hover:border-solid font-semibold hover:border-green-700 rounded-md"
+                className="bg-red-500 px-4 py-2 text-white hover:bg-white hover:text-black hover:delay-75 hover:duration-75 ease-linear hover:border-2 hover:rounded-xl delay-75 duration-75 hover:border-solid font-semibold hover:border-red-700 rounded-md"
               >
                 No
               </button>
@@ -304,7 +295,7 @@ const PostDetails = () => {
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Write a comment"
                 type="text"
-                required  = {true}
+                required={true}
                 className="md:w-[90%] outline-none px-4 mt-4 md:mt-0"
               />
               <button
