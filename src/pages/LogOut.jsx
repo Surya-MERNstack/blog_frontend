@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const LogOut = () => {
   const navigate = useNavigate();
 
+  
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_URL}/api/auth/logout`)
